@@ -9,7 +9,7 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 # Pinned fork revision of the UI (drts-sv/inpx-web-glass). Bump to refresh.
-ARG GLASS_REF=156eea0
+ARG GLASS_REF=fd81e20
 
 RUN git clone https://github.com/drts-sv/inpx-web-glass /src \
  && cd /src \
