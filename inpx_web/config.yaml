@@ -1,0 +1,51 @@
+name: inpx-web library
+version: "1.5.8-2"
+slug: inpx_web
+description: Поиск по .inpx-коллекции (fb2) с веб-интерфейсом и OPDS-сервером для читалок
+url: https://github.com/drts-sv/inpx-web
+arch:
+  - amd64
+  - aarch64
+startup: application
+boot: auto
+init: false
+
+# No ingress on purpose: inpx-web serves its Vue assets from the site root and
+# ignores the /api/hassio_ingress/<token>/ prefix, so the UI would 404.
+# The port + "Open Web UI" is the supported route.
+ports:
+  12380/tcp: 12380
+ports_description:
+  12380/tcp: Веб-интерфейс и OPDS
+webui: http://[HOST]:[PORT:12380]/
+panel_title: Библиотека
+panel_icon: mdi:book-search
+
+map:
+  - type: media
+    read_only: true
+  - type: share
+    read_only: false
+
+options:
+  lib_dir: /media/disk/torrents/fb2.Flibusta.Net
+  inpx_file: ""
+  data_dir: /data/inpx-web
+  access_password: ""
+  opds_user: ""
+  opds_password: ""
+  low_memory: true
+schema:
+  lib_dir: str
+  inpx_file: str
+  data_dir: str
+  access_password: password
+  opds_user: str
+  opds_password: password
+  low_memory: bool
+
+# No build.args / BUILD_FROM: the Supervisor did not pass them for this local
+# app (Docker got an empty base name). The Dockerfile is self-contained instead.
+
+# /data is the persistent volume: the search DB and cache live there and are
+# NOT rebuilt from scratch on every container start.
