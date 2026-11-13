@@ -94,7 +94,12 @@ fi
 log "inpx-web: Web UI  -> http://<host>:${PORT}/"
 log "inpx-web: OPDS    -> http://<host>:${PORT}/opds"
 
-exec /opt/inpx-web/inpx-web \
+# The app extracts its bundled front-end into ${DATA_DIR}/public only when
+# version.txt differs. Our fork keeps upstream's version number, so drop the
+# marker every start to guarantee the glass theme is the one being served.
+rm -f "${DATA_DIR}/public/version.txt"
+
+exec node server \
     --data-dir "$DATA_DIR" \
     --lib-dir "$LIB_DIR" \
     --inpx "$INPX_FILE" \
