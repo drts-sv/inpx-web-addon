@@ -30,6 +30,7 @@ fb2, веб-интерфейс и OPDS-сервер для читалок.
 | `access_password` | пусто | пароль на веб-интерфейс |
 | `opds_user` / `opds_password` | пусто | Basic-auth для OPDS |
 | `low_memory` | `true` | `lowMemoryMode` — для хостов под swap |
+| `db_cache_size` | `5` | `dbCacheSize`: кэш БД в памяти, 1–50 |
 
 ## Особенности реализации
 

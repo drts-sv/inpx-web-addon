@@ -21,9 +21,11 @@ ACCESS_PASSWORD="$(opt access_password)"
 OPDS_USER="$(opt opds_user)"
 OPDS_PASSWORD="$(opt opds_password)"
 LOW_MEMORY="$(opt low_memory)"
+DB_CACHE="$(opt db_cache_size)"
 
 [ -n "$DATA_DIR" ] || DATA_DIR="/data/inpx-web"
 [ -n "$LOW_MEMORY" ] || LOW_MEMORY="true"
+[ -n "$DB_CACHE" ] || DB_CACHE="5"
 
 log "inpx-web: library dir = ${LIB_DIR}"
 [ -d "$LIB_DIR" ] || die "Каталог библиотеки не найден: ${LIB_DIR}. Проверьте, что диск смонтирован в /media и что add-on имеет доступ к media."
@@ -48,6 +50,7 @@ fi
 
 log "inpx-web: inpx file   = ${INPX_FILE}"
 log "inpx-web: data dir    = ${DATA_DIR}"
+log "inpx-web: lowMemory   = ${LOW_MEMORY} | dbCacheSize = ${DB_CACHE}"
 
 # --- config.json -------------------------------------------------------------
 # Add-on options are the source of truth for these fields; everything else in
@@ -60,11 +63,13 @@ CONFIG_FILE="${DATA_DIR}/config.json"
 if [ -f "$CONFIG_FILE" ]; then
     jq --arg pw "$ACCESS_PASSWORD" \
        --argjson low "$LOW_MEMORY" \
+       --argjson dbc "$DB_CACHE" \
        --arg ou "$OPDS_USER" \
        --arg op "$OPDS_PASSWORD" \
        --argjson port "$PORT" \
        '.accessPassword = $pw
         | .lowMemoryMode = $low
+        | .dbCacheSize = $dbc
         | .server = ((.server // {}) | .host = "0.0.0.0" | .port = $port)
         | .opds = ((.opds // {}) | .enabled = true | .user = $ou | .password = $op | .root = "/opds")' \
        "$CONFIG_FILE" > "${CONFIG_FILE}.tmp"
@@ -72,10 +77,11 @@ if [ -f "$CONFIG_FILE" ]; then
 else
     jq -n --arg pw "$ACCESS_PASSWORD" \
        --argjson low "$LOW_MEMORY" \
+       --argjson dbc "$DB_CACHE" \
        --arg ou "$OPDS_USER" \
        --arg op "$OPDS_PASSWORD" \
        --argjson port "$PORT" \
-       '{accessPassword: $pw, lowMemoryMode: $low,
+       '{accessPassword: $pw, lowMemoryMode: $low, dbCacheSize: $dbc,
          server: {host: "0.0.0.0", port: $port},
          opds: {enabled: true, user: $ou, password: $op, root: "/opds"}}' \
        > "$CONFIG_FILE"

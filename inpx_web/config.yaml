@@ -1,5 +1,5 @@
 name: inpx-web library
-version: "1.5.8-2"
+version: "1.5.8-3"
 slug: inpx_web
 description: Поиск по .inpx-коллекции (fb2) с веб-интерфейсом и OPDS-сервером для читалок
 url: https://github.com/drts-sv/inpx-web
@@ -35,6 +35,7 @@ options:
   opds_user: ""
   opds_password: ""
   low_memory: true
+  db_cache_size: 5
 schema:
   lib_dir: str
   inpx_file: str
@@ -43,6 +44,7 @@ schema:
   opds_user: str
   opds_password: password
   low_memory: bool
+  db_cache_size: int(1,50)
 
 # No build.args / BUILD_FROM: the Supervisor did not pass them for this local
 # app (Docker got an empty base name). The Dockerfile is self-contained instead.
