@@ -8,7 +8,7 @@
 | Файл | Зачем |
 |---|---|
 | `config.yaml` | манифест add-on: опции, порт, монтирование `media`/`share` |
-| `Dockerfile` | multi-stage: `node:20-bookworm-slim` → клон [inpx-web-glass](https://github.com/drts-sv/inpx-web-glass) → `npm ci` → `webpack` → `prepkg`; рантайм — тот же Node-образ с прод-зависимостями и `node server` |
+| `Dockerfile` | Debian bookworm (glibc — бинарник pkg собран под glibc, не под musl) + готовый релизный бинарник под `amd64`/`aarch64` |
 | `run.sh` | читает опции из `/data/options.json` через `jq`, находит `.inpx`, генерирует `config.json`, запускает сервер |
 
 ## Установка

@@ -1,7 +1,7 @@
 name: inpx-web library
-version: "1.5.8-4"
+version: "1.5.8-5"
 slug: inpx_web
-description: Поиск по .inpx-коллекции (fb2) — стеклянная тема, тёмный/светлый режим, поиск одной строкой, OPDS
+description: Поиск по .inpx-коллекции (fb2) с веб-интерфейсом и OPDS-сервером для читалок
 url: https://github.com/drts-sv/inpx-web
 arch:
   - amd64

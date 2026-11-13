@@ -17,7 +17,7 @@ fb2, веб-интерфейс и OPDS-сервер для читалок.
 |---|---|
 | `repository.yaml` | делает репозиторий доступным как источник add-on'ов в HA |
 | `inpx_web/config.yaml` | манифест: опции, порт 12380, монтирование `media:ro` и `share:rw` |
-| `inpx_web/Dockerfile` | multi-stage `node:20-bookworm-slim`: сборка клиента из форка [inpx-web-glass](https://github.com/drts-sv/inpx-web-glass) + рантайм `node server` |
+| `inpx_web/Dockerfile` | `debian:bookworm-slim` + релизный бинарник inpx-web 1.5.8 (`TARGETARCH`: amd64/arm64) |
 | `inpx_web/run.sh` | `/data/options.json` → `jq` → поиск `.inpx` → генерация `config.json` → запуск сервера |
 
 ## Опции
